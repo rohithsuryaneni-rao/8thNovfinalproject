@@ -1,0 +1,238 @@
+/* Dashboard container styles */
+.dashboard-container {
+    display: flex; /* Use flexbox to arrange sidebar and content */
+    padding: 20px; /* General padding for the dashboard */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+    background: rgba(61, 58, 58, 0.8); /* Semi-transparent background for the sidebar */
+    border-radius: 10px; /* Rounded corners */
+    padding: 0; /* Padding inside the sidebar */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+/* Navigation content */
+.nav-content {
+    display: flex; /* Arrange nav items vertically */
+    flex-direction: column; /* Stack items vertically */
+    margin: 10px; /* General margin for navigation */
+}
+
+/* Navigation item styles */
+.nav-item {
+    margin: 10px 0; /* Spacing between navigation items */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: 0.3s; /* Smooth background transition on hover */
+}
+
+.nav-item:hover {
+    background: rgba(0, 0, 0, 0.2); /* Highlight effect on hover */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Content area styles */
+.content {
+    flex: 1; /* Take up the remaining space in the dashboard */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    display: flex; /* Use flexbox for item alignment */
+    flex-wrap: wrap; /* Allow items to wrap */
+    background: rgba(255, 255, 255, 0.1); /* Light background for contrast */
+    margin: 10px; /* General margin for content area */
+}
+
+/* Card styles */
+.card {
+    flex: 1 1 calc(30% - 20px); /* Flexible width for cards */
+    background: rgba(255, 255, 255, 0.1); /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Inner padding for cards */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    transition: transform 0.2s; /* Smooth transform on hover */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+.card:hover {
+    transform: scale(1.02); /* Slightly scale up on hover */
+}
+
+/* Course item styles */
+.course-item h3 {
+    margin:  0 10px; /* Margin below the course title */
+}
+
+.course-item p {
+    margin: 5px 0; /* Margin for course description and details */
+}
+
+/* Search Bar Styles */
+.search-bar {
+    display: flex; /* Align items horizontally */
+    margin-bottom: 20px; /* Space below search bar */
+    margin-left: 20px;
+}
+
+.search-input {
+    flex: 1; /* Allow input to grow */
+    padding: 12px; /* Inner padding */
+    border: 2px solid #007bff; /* Primary border color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    transition: border-color 0.3s; /* Smooth border transition */
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+}
+
+.search-input:focus {
+    border-color: #0056b3; /* Darker border on focus */
+    outline: none; /* Remove outline */
+}
+
+.search-button {
+    padding: 12px 20px; /* Inner padding */
+    background: #007bff; /* Primary button color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background 0.3s; /* Smooth background transition */
+    margin-left: 10px; /* Space between input and button */
+}
+
+.search-button:hover {
+    background: #0056b3; /* Darker shade on hover */
+}
+
+.searchbox {
+    border-radius: 10px;
+    flex: auto;
+}
+
+/* Filters Styles */
+.filters {
+    display: flex; /* Align filter options horizontally */
+    gap: 20px; /* Space between filter elements */
+    margin-bottom: 20px; /* Space below filters */
+    flex-wrap: wrap; /* Wrap to next line if necessary */
+    margin-left: 20px;
+}
+
+.filter-group {
+    display: flex; /* Align label and select horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.filter-label {
+    margin-right: 10px; /* Space between label and select */
+    font-weight: bold; /* Bold label */
+    color: #333; /* Dark text color */
+    margin-left: 20px;
+}
+
+.filter-select {
+    padding: 10px; /* Inner padding */
+    border: 2px solid #ccc; /* Light border */
+    border-radius: 20px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    transition: border-color 0.3s; /* Smooth border transition */
+    background-color: rgba(255, 255, 255, 0.5); /* White background with transparency */
+}
+
+.filter-select:hover,
+.filter-select:focus {
+    border-color: #007bff; /* Change border color on hover/focus */
+}
+
+/* Reset Filters Button */
+.reset-button {
+    padding: 10px 15px; /* Inner padding */
+    background: #007bff; /* Primary button color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background 0.3s; /* Smooth background transition */
+}
+
+.reset-button:hover {
+    background: #446391; /* Darker shade on hover */
+}
+
+
+/* Enroll Button */
+.enroll-button {
+    padding: 10px 15px; /* Inner padding */
+    background: #007bff; /* Primary button color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background 0.3s; /* Smooth background transition */
+}
+
+.enroll-button:hover {
+    background: #388E3C; /* Darker shade on hover */
+}
+
+/* Section Title */
+.section-title {
+    font-size: 2rem; /* Larger title font */
+    margin-bottom: 0.5rem; /* Space below title */
+    color: #333; /* Dark text color */
+}
+
+/* Section Description */
+.section-description {
+    font-size: 1.2rem; /* Medium description font */
+    margin-bottom: 1rem; /* Space below description */
+    color: #666; /* Lighter text color */
+}
+h2, p{
+    margin-left: 20px;
+}
+.assignment-item {
+    margin-bottom: 20px;
+}
+
+.upload-label {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.file-input {
+    display: none; /* Hide the default file input */
+}
+.button-submit {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding for button */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Align with other elements */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Margin around button */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+}
+
+.button-submit:hover {
+    background-color: #45a049; /* Darker green on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.button-submit:active {
+    transform: translateY(0); /* Reset lift effect on click */
+}
