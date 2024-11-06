@@ -3,6 +3,7 @@
     display: flex; /* Use flexbox to arrange sidebar and content */
     padding: 20px; /* General padding for the dashboard */
     border-radius: 10px; /* Rounded corners */
+    backdrop-filter: blur(1px);
 }
 
 /* Sidebar styles */
@@ -12,6 +13,7 @@
     border-radius: 10px; /* Rounded corners */
     padding: 0; /* Padding inside the sidebar */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    backdrop-filter: blur(10px);
 }
 
 /* Navigation content */
@@ -29,7 +31,7 @@
 }
 
 .nav-item:hover {
-    background: rgba(0, 0, 0, 0.2); /* Highlight effect on hover */
+    background: rgba(0, 0, 0, 0.1); /* Highlight effect on hover */
     border-radius: 10px; /* Rounded corners */
 }
 
@@ -41,13 +43,15 @@
     display: flex; /* Use flexbox for item alignment */
     flex-wrap: wrap; /* Allow items to wrap */
     background: rgba(255, 255, 255, 0.1); /* Light background for contrast */
-    margin: 10px; /* General margin for content area */
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(3px);
+    margin-left: 10px;
 }
 
 /* Card styles */
 .card {
     flex: 1 1 calc(30% - 20px); /* Flexible width for cards */
-    background: rgba(255, 255, 255, 0.1); /* Light background for contrast */
+    background-color: rgba(8, 11, 14, 0.2);/* Light background for contrast */
     border-radius: 10px; /* Rounded corners */
     padding: 15px; /* Inner padding for cards */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
@@ -55,6 +59,7 @@
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 20px;
+   
 }
 
 .card:hover {
@@ -179,19 +184,6 @@
     background: #388E3C; /* Darker shade on hover */
 }
 
-/* Section Title */
-.section-title {
-    font-size: 2rem; /* Larger title font */
-    margin-bottom: 0.5rem; /* Space below title */
-    color: #333; /* Dark text color */
-}
-
-/* Section Description */
-.section-description {
-    font-size: 1.2rem; /* Medium description font */
-    margin-bottom: 1rem; /* Space below description */
-    color: #666; /* Lighter text color */
-}
 h2, p{
     margin-left: 20px;
 }
@@ -235,4 +227,116 @@ h2, p{
 
 .button-submit:active {
     transform: translateY(0); /* Reset lift effect on click */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #22dd3b;
+}
+/* Overall styling for the feedback form section */
+.feedback-form {
+    margin-top: 16px;
+    border-radius: 20px;
+    padding: 16px;
+    background-color: rgba(19, 20, 20, 0.3); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+}
+
+/* Textarea styling */
+textarea {
+   
+    width: 80%;
+    margin-top: 8px;
+    border-radius: 10px;
+    background-color: rgba(160, 160, 160, 0.2);
+    backdrop-filter: blur(5px); /* White background with transparency */
+}
+
+textarea::placeholder {
+    color: rgb(255, 255, 255); /* Semi-transparent placeholder color */
+}
+
+/* Button styling */
+.btn {
+    background-color: rgba(0, 123, 255, 0.9); /* Semi-transparent button background */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.btn:hover {
+    background-color: rgba(0, 86, 179, 0.8); /* Semi-transparent hover effect */
+}
+
+/* Styling for the submit and cancel buttons */
+.submit-feedback {
+    background-color:rgba(0, 123, 255, 0.9); /* Semi-transparent green */
+}
+
+.submit-feedback:hover {
+    background-color: rgba(33, 136, 56, 0.8); /* Darker green on hover */
+}
+
+.cancel-feedback {
+    background-color: rgba(152, 202, 13, 0.8); /* Semi-transparent red */
+}
+
+.cancel-feedback:hover {
+    background-color: rgba(200, 35, 51, 0.8); /* Darker red on hover */
+}
+
+/* Feedback actions section */
+.feedback-actions {
+    margin-top: 12px;
+}
+.feedback-container {
+    margin-left: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+
+
+.form-group {
+    margin-bottom: 16px;
+
+}
+
+button.submit-feedback {
+    background-color: rgba(40, 167, 69, 0.9);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button.submit-feedback:hover {
+    background-color: rgba(33, 136, 56, 0.9);
+}
+
+.feedback-text{
+    border-radius: 4px;
+    background-color: white,0.2;
+    backdrop-filter: 10px;
 }

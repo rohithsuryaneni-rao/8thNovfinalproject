@@ -5,6 +5,7 @@ interface Course {
     description: string;
     category: string;
     rating: number;
+    enrolled: boolean;
 }
 
 interface Assignment {
@@ -13,6 +14,15 @@ interface Assignment {
     description: string;
     dueDate: Date;
     status: string;
+}
+
+interface EnrolledCourse {
+    name: string;
+    description: string;
+    status: string;
+    progress: number;
+    showFeedback?: boolean;
+    feedbackText?: string;
 }
 
 @Component({
@@ -30,9 +40,9 @@ export class DashboardPageComponent implements OnInit {
     filteredCourses: Course[] = [];
     uniqueCategories: string[] = [];
 
-    enrolledCourses = [
-        { name: 'Angular Basics', description: 'Basics of Angular.', status: 'In Progress', progress: 60 },
-        { name: 'Advanced Java', description: 'Advanced concepts in Java.', status: 'Completed', progress: 100 }
+    enrolledCourses: EnrolledCourse[] = [
+        { name: 'Angular Basics', description: 'Basics of Angular.', status: 'In Progress', progress: 60, showFeedback: false, feedbackText: '' },
+        { name: 'Advanced Java', description: 'Advanced concepts in Java.', status: 'Completed', progress: 100, showFeedback: false, feedbackText: '' }
     ];
 
     assignments: Assignment[] = [
@@ -52,18 +62,13 @@ export class DashboardPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.courses = [
-            { name: 'Angular Basics', description: 'Learn the fundamentals of Angular framework.', category: 'Programming', rating: 4.5 },
-            { name: 'UI/UX Design Essentials', description: 'Introduction to user interface and user experience design.', category: 'Design', rating: 4.2 },
-            { name: 'Digital Marketing 101', description: 'Basics of digital marketing strategies and tools.', category: 'Marketing', rating: 4.8 },
-            { name: 'Data Structures in JavaScript', description: 'Explore data structures and algorithms using JavaScript.', category: 'Programming', rating: 4.7 }
+            { name: 'Angular Basics', description: 'Learn the fundamentals of Angular framework.', category: 'Programming', rating: 4.5, enrolled: false },
+            { name: 'UI/UX Design Essentials', description: 'Introduction to user interface and user experience design.', category: 'Design', rating: 4.2, enrolled: false },
+            { name: 'Digital Marketing 101', description: 'Basics of digital marketing strategies and tools.', category: 'Marketing', rating: 4.8, enrolled: false },
+            { name: 'Data Structures in JavaScript', description: 'Explore data structures and algorithms using JavaScript.', category: 'Programming', rating: 4.7, enrolled: false }
         ];
-
         this.filteredCourses = this.courses;
         this.uniqueCategories = this.getUniqueCategories();
-    }
-
-    enroll(course: Course): void {
-        console.log(`Enrolled in: ${course.name}`);
     }
 
     getUniqueCategories(): string[] {
@@ -72,11 +77,10 @@ export class DashboardPageComponent implements OnInit {
 
     filterCourses(): void {
         this.filteredCourses = this.courses.filter(course => {
-            const matchesSearch = this.searchTerm ? 
-                (course.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
-                course.description.toLowerCase().includes(this.searchTerm.toLowerCase())) : 
-                true;
-            
+            const matchesSearch = this.searchTerm
+                ? course.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                  course.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+                : true;
             const matchesCategory = this.selectedCategory ? course.category === this.selectedCategory : true;
             const matchesRating = this.selectedRating ? course.rating >= +this.selectedRating : true;
 
@@ -114,5 +118,30 @@ export class DashboardPageComponent implements OnInit {
             const file = fileInput.files[0];
             console.log(`File selected for assignment ${assignment.title}: ${file.name}`);
         }
+    }
+
+    enroll(course: Course): void {
+        course.enrolled = !course.enrolled; // Toggle the enrolled status
+    }
+
+    toggleFeedback(enrolled: EnrolledCourse): void {
+        enrolled.showFeedback = !enrolled.showFeedback; // Toggle feedback textbox visibility
+    }
+
+    submitFeedback(enrolled: EnrolledCourse): void {
+        console.log(`Feedback for ${enrolled.name}:`, enrolled.feedbackText);
+        enrolled.feedbackText = '';
+        enrolled.showFeedback = false;
+    }
+    feedback = {
+        name: '',
+        description: ''
+    };
+    
+    submitFeedbackForm(): void {
+        console.log('Feedback submitted:', this.feedback);
+        // Logic to handle the feedback submission, e.g., send it to a server or display a confirmation message.
+        // Reset the feedback form after submission
+        this.feedback = { name: '', description: '' };
     }
 }

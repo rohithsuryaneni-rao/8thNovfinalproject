@@ -33,25 +33,25 @@
             <div *ngSwitchCase="'courses'" class="ngSwitchCase">
                 <h2>Courses</h2>
                 <p>Here you can see all available courses.</p>
-            
+
                 <!-- Search Bar -->
                 <div class="search-bar">
-                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search courses..."  class="searchbox"/>
+                    <input type="text" [(ngModel)]="searchTerm" placeholder="Search courses..." class="searchbox" />
                     <button (click)="searchCourses()" class="search-button">Search</button>
                 </div>
-            
+
                 <!-- Filter and Sort Options -->
                 <div class="filters">
                     <div class="filter-group">
-                        <label for="categoryFilter" >Category  :</label>&nbsp;&nbsp;
+                        <label for="categoryFilter">Category:</label>&nbsp;&nbsp;
                         <select id="categoryFilter" [(ngModel)]="selectedCategory" (change)="filterCourses()" class="filter-select">
                             <option value="">All Categories</option>
                             <option *ngFor="let category of uniqueCategories" [value]="category">{{ category }}</option>
                         </select>
                     </div>
-            
+
                     <div class="filter-group">
-                        <label for="ratingFilter" >Rating  :</label> &nbsp;&nbsp;
+                        <label for="ratingFilter">Rating:</label>&nbsp;&nbsp;
                         <select id="ratingFilter" [(ngModel)]="selectedRating" (change)="filterCourses()" class="filter-select">
                             <option value="">All Ratings</option>
                             <option value="4">4 and above</option>
@@ -60,32 +60,44 @@
                             <option value="1">1 and above</option>
                         </select>
                     </div>
-            
+
                     <button (click)="resetFilters()" class="reset-button">Reset Filters</button>
                 </div>
-            
+
                 <!-- Displaying Filtered Courses -->
                 <div *ngFor="let course of filteredCourses" class="card course-item">
                     <h3 class="course-title">{{ course.name }}</h3>
                     <p class="course-description">{{ course.description }}</p>
                     <p><strong>Category:</strong> {{ course.category }}</p>
                     <p><strong>Rating:</strong> {{ course.rating }} / 5</p>
-                    <button (click)="enroll(course)" class="enroll-button">Enroll</button>
+                    <button (click)="enroll(course)" [disabled]="course.enrolled" class="enroll-button">
+                        {{ course.enrolled ? 'Enrolled' : 'Enroll' }}
+                    </button>
                 </div>
             </div>
-            
 
             <!-- Enrolled Courses View -->
             <div *ngSwitchCase="'enrolledCourses'" class="ngSwitchCase">
-                <h2>Enrolled Courses</h2>
-                <p>Here you can see the courses you are enrolled in.</p>
+                <h2 class="section-title">Enrolled Courses</h2>
+                <p class="section-description">Here you can see the courses you are enrolled in.</p>
                 <div *ngFor="let enrolled of enrolledCourses" class="card course-item">
-                    <h3>{{ enrolled.name }}</h3>
-                    <p>{{ enrolled.description }}</p>
-                    <p><strong>Status:</strong> {{ enrolled.status }}</p>
-                    <p><strong>Progress:</strong> {{ enrolled.progress }}%</p>
+                    <h3 class="course-title">{{ enrolled.name }}</h3>
+                    <p class="course-description">{{ enrolled.description }}</p>
+                    <p class="course-status"><strong>Status:</strong> {{ enrolled.status }}</p>
+                    <p class="course-progress"><strong>Progress:</strong> {{ enrolled.progress }}%</p>
+                    <button class="btn feedback-button" (click)="toggleFeedback(enrolled)">Leave Feedback</button>
+            
+                    <!-- Feedback Form -->
+                    <div *ngIf="enrolled.showFeedback" class="feedback-form">
+                        <textarea [(ngModel)]="enrolled.feedbackText" rows="4" placeholder="Enter your feedback..."></textarea>
+                        <div class="feedback-actions">
+                            <button class="btn submit-feedback" (click)="submitFeedback(enrolled)">Submit Feedback</button> &nbsp;&nbsp;
+                            <button class="btn cancel-feedback" (click)="toggleFeedback(enrolled)">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
 
             <!-- Assignments View -->
             <div *ngSwitchCase="'assignments'" class="ngSwitchCase">
@@ -96,20 +108,14 @@
                     <p>{{ assignment.description }}</p>
                     <p><strong>Due Date:</strong> {{ assignment.dueDate | date }}</p>
                     <p><strong>Status:</strong> {{ assignment.status }}</p>
-                
+
                     <!-- File upload input -->
                     <label for="fileUpload-{{ assignment.id }}" class="upload-label">Choose file</label>
-                    <input 
-                        type="file" 
-                        id="fileUpload-{{ assignment.id }}" 
-                        (change)="onFileSelected($event, assignment)" 
-                        class="file-input" 
-                    />
-                
+                    <input type="file" id="fileUpload-{{ assignment.id }}" (change)="onFileSelected($event, assignment)" class="file-input" />
+
                     <!-- Submit button -->
-                    <button class="button-submit"  (click)="submitAssignment(assignment)">Submit</button>
+                    <button class="button-submit" (click)="submitAssignment(assignment)">Submit</button>
                 </div>
-                
             </div>
 
             <!-- Performance Analysis View -->
@@ -126,14 +132,24 @@
             <!-- Feedback View -->
             <div *ngSwitchCase="'feedback'" class="ngSwitchCase">
                 <h2>Feedback</h2>
-                <p>Here you can provide and view feedback.</p>
-                <div *ngFor="let feedback of feedbackList" class="card feedback-item">
-                    <h3>{{ feedback.courseName }}</h3>
-                    <p>{{ feedback.comment }}</p>
-                    <p><strong>Rating:</strong> {{ feedback.rating }} / 5</p>
+                <p>We value your suggestions and feedback. Please share your thoughts with us!</p>
+            
+                <div class="feedback-container">
+                    <h3>Your Feedback Matters</h3>
+                    <form (ngSubmit)="submitFeedbackForm()" #feedbackForm="ngForm">
+                        <div class="form-group">
+                            <label for="name" class="feedback-name">Your Name &nbsp;&nbsp;:</label> &nbsp;&nbsp;
+                            <input type="text" id="name" class="feedback-text" name="name" [(ngModel)]="feedback.name" required placeholder="Enter your name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Your Feedback</label>
+                            <textarea id="description" name="description" [(ngModel)]="feedback.description" required rows="4" placeholder="Share your thoughts..."></textarea>
+                        </div>
+                        <button type="submit" class="btn submit-feedback">Submit Feedback</button>
+                    </form>
                 </div>
-                <button (click)="addFeedback()">Add Feedback</button>
             </div>
+            
 
             <!-- Default View -->
             <div *ngSwitchDefault class="ngSwitchCase">
