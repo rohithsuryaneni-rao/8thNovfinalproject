@@ -17,7 +17,12 @@ import { TermsConditionsPageComponent } from './terms-conditions-page/terms-cond
 import { CoursePageComponent } from './courses-page/courses-page.component';
 import { AfterLoginHeaderComponent } from './after-login-header/after-login-header.component';
 
+import { NgChartsModule } from 'ng2-charts';
+import { HttpClientModule } from '@angular/common/http';
 
+
+
+NgChartsModule
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,13 +37,14 @@ import { AfterLoginHeaderComponent } from './after-login-header/after-login-head
     PrivacyPolicyPageComponent,
     TermsConditionsPageComponent,
     CoursePageComponent,
-    AfterLoginHeaderComponent
+    AfterLoginHeaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
-    
+    FormsModule,
+    NgChartsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

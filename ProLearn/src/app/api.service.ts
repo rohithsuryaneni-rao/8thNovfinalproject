@@ -1,9 +1,47 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+interface Course
+{
+  courseId: number;
+  name: string;
+  description: string;
+  category: string;
+  rating: number;
+  isEnrolled: boolean;
+}
+export interface Student
+{
+  studentName: string;
+  studentEmail: string;
+  studentPassword: string;
+}interface Enrollment
+{
+  enrollmentId:number,
+  studentId:number,
+  courseId:number
+}
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
-  constructor() { }
+  private getallurlcourse='http://localhost:8000/api/getAll';
+  private geturlstudent='http://localhost:8001/api/addStudent';
+  private enrollurl='http://localhost:8003/enrollment/enroll';
+  constructor(private http: HttpClient){}
+  getAllCourses(): Observable<Course[]>
+  {
+    return this.http.get<Course[]>(this.getallurlcourse);
+  }
+  registerStudent(student: { studentName: string, studentEmail: string, studentPassword: string }): Observable<any>
+  {
+    return this.http.post(this.geturlstudent,student);
+  }
+  enrollStudent(studentId:number, courseId:number): Observable<any>
+  {
+    console.log(studentId,courseId)
+    const enrollmentData={"studentId":studentId,"courseId":courseId};
+    return this.http.post<any>(this.enrollurl,enrollmentData);
+  }
 }

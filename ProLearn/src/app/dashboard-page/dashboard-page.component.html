@@ -70,9 +70,10 @@
                     <p class="course-description">{{ course.description }}</p>
                     <p><strong>Category:</strong> {{ course.category }}</p>
                     <p><strong>Rating:</strong> {{ course.rating }} / 5</p>
-                    <button (click)="enroll(course)" [disabled]="course.enrolled" class="enroll-button">
-                        {{ course.enrolled ? 'Enrolled' : 'Enroll' }}
-                    </button>
+                    <button (click)="enroll(course.courseId)" [disabled]="course.isEnrolled" class="enroll-button">
+    {{ course.isEnrolled ? 'Enrolled' : 'Enroll' }}
+</button>
+
                 </div>
             </div>
 
@@ -83,20 +84,9 @@
                 <div *ngFor="let enrolled of enrolledCourses" class="card course-item">
                     <h3 class="course-title">{{ enrolled.name }}</h3>
                     <p class="course-description">{{ enrolled.description }}</p>
-                    <p class="course-status"><strong>Status:</strong> {{ enrolled.status }}</p>
-                    <p class="course-progress"><strong>Progress:</strong> {{ enrolled.progress }}%</p>
-                    <button class="btn feedback-button" (click)="toggleFeedback(enrolled)">Leave Feedback</button>
-            
-                    <!-- Feedback Form -->
-                    <div *ngIf="enrolled.showFeedback" class="feedback-form">
-                        <textarea [(ngModel)]="enrolled.feedbackText" rows="4" placeholder="Enter your feedback..."></textarea>
-                        <div class="feedback-actions">
-                            <button class="btn submit-feedback" (click)="submitFeedback(enrolled)">Submit Feedback</button> &nbsp;&nbsp;
-                            <button class="btn cancel-feedback" (click)="toggleFeedback(enrolled)">Cancel</button>
-                        </div>
-                    </div>
                 </div>
             </div>
+            
             
 
             <!-- Assignments View -->
