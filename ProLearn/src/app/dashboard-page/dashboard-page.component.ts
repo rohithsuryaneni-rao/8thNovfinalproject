@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ApiService } from '../api.service';
-
-interface Course {
+interface Course 
+{
   courseId:number;
   name: string;
   description: string;
@@ -9,16 +9,22 @@ interface Course {
   rating: number;
   isEnrolled:boolean
 }
-
-interface Assignment {
+interface Enrollment
+{
+  enrollmentId:number;
+  studentId:number;
+  courseId:number;
+}
+interface Assignment 
+{
   id: number;
   title: string;
   description: string;
   dueDate: Date;
   status: string;
 }
-
-interface EnrolledCourse {
+interface EnrolledCourse 
+{
   name: string;
   description: string;
   status: string;
@@ -26,14 +32,17 @@ interface EnrolledCourse {
   showFeedback?: boolean;
   feedbackText?: string;
 }
-
+interface Feedback
+{
+  name:string;
+  feedbackDescription:string;
+}
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.css']
 })
-export class DashboardPageComponent implements OnInit {
-    enrolledCourses: Course[] | undefined;
+export class DashboardPageComponent implements OnInit{
 constructor(private ApiService:ApiService){}
     studentId=1;
   course:any;
@@ -44,7 +53,7 @@ constructor(private ApiService:ApiService){}
   courses: Course[] = [];
   filteredCourses: Course[] = [];
   uniqueCategories: string[] = [];
-
+  enrolledCourses:Course[]=[];
 
 
   assignments: Assignment[] = [
@@ -85,7 +94,9 @@ loadCourses(): void {
     });
 }
 
-
+ngDoCheck(): void {
+  this.getEnrolledCourses();
+}
  
   getUniqueCategories(filteredCourses: Course[]): string[] {
     return Array.from(new Set(this.courses.map(course => course.category)));
@@ -139,24 +150,33 @@ loadCourses(): void {
   enroll(courseId: number): void {
     this.ApiService.enrollStudent(this.studentId, courseId).subscribe(
         response => {
-            // Handle success
             console.log('Enrolled successfully:', response);
-            alert('You have been successfully enrolled in the course!');          
-
-            // Update the course enrollment status in the UI
-            const course = this.courses.find(c => c.courseId === courseId);
-            if (course) {
-                course.isEnrolled = true;
+            // alert('You have been successfully enrolled in the course!');
+            // console.log(this.courseId);
+            let courseToEnroll = this.courses.find(course => course.courseId === courseId);
+            if (courseToEnroll) {
+                console.log(courseToEnroll);
+                // Add the course to enrolledCourses if it's not already there
+                if (!this.isEnrolled(courseToEnroll.courseId)) {
+                    this.enrolledCourses.push(courseToEnroll);
+                    alert(`You have been successfully enrolled in: ${courseToEnroll.name}`);
+                } else {
+                    alert('You are already enrolled in this course.');
+                }
             }
+            console.log(this.enrolledCourses);
         },
         error => {
-            // Handle error
             console.error('Error enrolling:', error);
             alert('Error enrolling in the course!');
         }
     );
-}
+   
 
+}
+isEnrolled(courseId: number): boolean {
+    return this.enrolledCourses.some(course => course.courseId === courseId);
+}
   
 
   toggleFeedback(enrolled: EnrolledCourse): void {
@@ -170,14 +190,37 @@ loadCourses(): void {
   }
 
   feedback = {
-    name: '',
-    description: ''
+    name:"",
+    feedbackDescription:""
   };
 
   submitFeedbackForm(): void {
     console.log('Feedback submitted:', this.feedback);
-    // Logic to handle the feedback submission, e.g., send it to a server or display a confirmation message.
-    // Reset the feedback form after submission
-    this.feedback = { name: '', description: '' };
+    this.ApiService.submitFeedback(this.feedback).subscribe(
+      (response)=>{
+        console.log("your feedback is successfully added",response)
+        
+      },
+      (error)=>{
+        console.log("there is error while adding your feedback",error)
+      }
+    )
   }
+  getEnrolledCourses(): void {
+    this.ApiService.getEnrolledCourses(this.studentId).subscribe({
+        next: (enrollments: Enrollment[]) => {
+            this.enrolledCourses = enrollments.map((enrollment) => ({
+                courseId: enrollment.courseId,
+                name: `Course Name ${enrollment.courseId}`,
+                description: `Description for course ${enrollment.courseId}`,
+                category: 'Category for course',
+                rating: 4,
+                isEnrolled: true
+            }));
+        },
+        error: (err) => {
+            console.error('Error fetching enrolled courses: ', err);
+        }
+    });
+}
 }

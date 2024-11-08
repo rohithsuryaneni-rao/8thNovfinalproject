@@ -70,9 +70,7 @@
                     <p class="course-description">{{ course.description }}</p>
                     <p><strong>Category:</strong> {{ course.category }}</p>
                     <p><strong>Rating:</strong> {{ course.rating }} / 5</p>
-                    <button (click)="enroll(course.courseId)" [disabled]="course.isEnrolled" class="enroll-button">
-    {{ course.isEnrolled ? 'Enrolled' : 'Enroll' }}
-</button>
+                    <button (click)="enroll(course.courseId)" [disabled]="course.isEnrolled" class="enroll-button">{{ course.isEnrolled ? 'Enrolled' : 'Enroll' }}</button>
 
                 </div>
             </div>
@@ -129,11 +127,23 @@
                     <form (ngSubmit)="submitFeedbackForm()" #feedbackForm="ngForm">
                         <div class="form-group">
                             <label for="name" class="feedback-name">Your Name &nbsp;&nbsp;:</label> &nbsp;&nbsp;
-                            <input type="text" id="name" class="feedback-text" name="name" [(ngModel)]="feedback.name" required placeholder="Enter your name" />
+                            <input type="text" 
+                            id="name" 
+                            class="feedback-text" 
+                            name="name" 
+                            [(ngModel)]="feedback.name" 
+                            required
+                            required placeholder="Enter your name" />
                         </div>
                         <div class="form-group">
-                            <label for="description">Your Feedback</label>
-                            <textarea id="description" name="description" [(ngModel)]="feedback.description" required rows="4" placeholder="Share your thoughts..."></textarea>
+                            <label for="feedbackDescription">Your Feedback</label>
+                            <textarea 
+                            id="feedbackDescription" 
+                            name="feedbackDescription" 
+                            [(ngModel)]="feedback.feedbackDescription" 
+                            required 
+                            rows="4" 
+                            placeholder="Share your thoughts..."></textarea>
                         </div>
                         <button type="submit" class="btn submit-feedback">Submit Feedback</button>
                     </form>
